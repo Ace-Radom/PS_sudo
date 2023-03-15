@@ -42,7 +42,8 @@ Then restart powershell. Your `$profile` should be successfully loaded.
 ## How to use
 
 ```
-sudo [/? | /p | <commands>]
+sudo [/? | /p]
+sudo [/b] <commands>
 ```
 
 It will open a new powershell window, access the path where you call sudo, and run all following commands.
@@ -50,3 +51,5 @@ It will open a new powershell window, access the path where you call sudo, and r
 Using `/?` to show help page.
 
 Using `/p` to open a powershell window with admin privileges.
+
+Using `/b` to run commands in background.
