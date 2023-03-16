@@ -43,7 +43,11 @@ Then restart powershell. Your `$profile` should be successfully loaded.
 
 ```
 sudo [/? | /p [/h]]
-sudo [/b] <commands>
+sudo [/b | /admin] <commands>
+
+Examples:
+  sudo /b notepad.exe
+  sudo /admin sqlite3 E:/test.db
 ```
 
 - Using `/?` to show help page.
@@ -53,6 +57,8 @@ sudo [/b] <commands>
     - Using `/h` to open the new powershell window in current directory
 
 - Using `/b` to run commands in background.
+
+- Using `/admin` to try to run one application as administrator
 
 If you are using sudo directly to run commands, sudo will automatically access the current directory and run all commands you give.
 

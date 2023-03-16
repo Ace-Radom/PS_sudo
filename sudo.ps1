@@ -3,15 +3,15 @@ Function _sudo {
     {
         Write-Output "`nSudo Command for Windows PowerShell`n`nTry to run commands with admin privileges`n"
         Write-Output "Usage: sudo [/? | /p [/h]]"
-        Write-Output "Usage: sudo [/b] <commands>`n"
+        Write-Output "Usage: sudo [/b | /admin] <commands>`n"
         Write-Output "No Options  show this help page (it is same as typing in /?)"
         Write-Output "/?          show this help page (it is same as not typing in any options)"
         Write-Output "/p          open one powershell window with admin privileges"
         Write-Output "/h          open the new powershell window in current directory (it can only be used with /p)"
         Write-Output "/b          run commands in background"
-        Write-Output "<commands>  commands need to be run with admin privileges`n"
+        Write-Output "/admin      try to run commands as administrator (this command must be started with a application)`n"
     } # help page
-    elseif ( $args[0] -eq "/p" ) 
+    elseif ( $args[0] -eq "/p" )
     {
         if ( $args[1] -eq "/h" )
         {
@@ -30,6 +30,11 @@ Function _sudo {
         Start-Process "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -Verb runAs -WindowStyle Hidden -ArgumentList ( $ss )
 #       Start-Process powershell -Verb runAs -WindowStyle Hidden $ss
     } # run in background
+    elseif ( ( $args.Length -gt 1 ) -and ( $args[0] -eq "/admin" ) )
+    {
+        $ss = $args[1..$args.Length]
+        runas /user:administrator `"$ss`"
+    } # run as admin
     else
     {
         $ss = "$args ; pause"
