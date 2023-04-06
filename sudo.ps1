@@ -1,5 +1,5 @@
 Function _sudo {
-    if ( ( $args.Length -eq 0 ) -or ( ( $args.Length -eq 1 ) -and ( $args[0] -eq "/?" ) ) )
+    if ( ( $args.Length -eq 0 ) -or ( ( $args.Length -eq 1 ) -and ( ( $args[0] -eq "/?" ) -or ( $args[0] -eq "-?" ) ) ) )
     {
         Write-Output "`nSudo Command for Windows PowerShell`n`nTry to run commands with admin privileges`n"
         Write-Output "Usage: sudo [/? | /p [/h]]"
@@ -11,9 +11,9 @@ Function _sudo {
         Write-Output "/b          run commands in background"
         Write-Output "/admin      try to run commands as administrator (this command must be started with a application)`n"
     } # help page
-    elseif ( $args[0] -eq "/p" )
+    elseif ( ( $args[0] -eq "/p" ) -or ( $args[0] -eq "-p" ) )
     {
-        if ( $args[1] -eq "/h" )
+        if ( ( $args[1] -eq "/h" ) -or ( $args[1] -eq "-h" ) )
         {
             Start-Process "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -Verb runAs -ArgumentList ( "-NoExit" , "cd $pwd" )
 #           Start-Process powershell -Verb runAs -ArgumentList ( "-NoExit" , "cd $pwd" )
@@ -24,13 +24,13 @@ Function _sudo {
 #           Start-Process powershell -Verb runAs
         }
     } # start a powershell page with admin privileges
-    elseif ( ( $args.Length -gt 1 ) -and ( $args[0] -eq "/b" ) )
+    elseif ( ( $args.Length -gt 1 ) -and ( ( $args[0] -eq "/b" ) -or ( $args[0] -eq "-b" ) ) )
     {
         $ss = "cd $pwd ; " + $args[1..$args.Length]
         Start-Process "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -Verb runAs -WindowStyle Hidden -ArgumentList ( $ss )
 #       Start-Process powershell -Verb runAs -WindowStyle Hidden $ss
     } # run in background
-    elseif ( ( $args.Length -gt 1 ) -and ( $args[0] -eq "/admin" ) )
+    elseif ( ( $args.Length -gt 1 ) -and ( ( $args[0] -eq "/admin" ) -or ( $args[0] -eq "-admin" ) ) )
     {
         $ss = $args[1..$args.Length]
         runas /user:administrator `"$ss`"
